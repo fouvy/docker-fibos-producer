@@ -1,0 +1,13 @@
+version: '2'
+services: 
+  fibos_producer: 
+    build: ./fibos
+    restart: always
+    ports:
+      - "9870:9870"
+      - "8870:8870"
+    volumes:
+      - ./data:/data
+      - ./fibos/config/config_producer.js:/fibos/config_producer.js
+      - ./fibos/config/producer_node.js:/fibos/producer_node.js
+    container_name: fibos_producer
