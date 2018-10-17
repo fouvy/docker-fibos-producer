@@ -43,6 +43,16 @@ If your want to see pb log, run this:
 ```
 sudo docker-compose logs
 ```
+# How to upgrade?
+Change current directory to git project dir, then run following code:
+```
+./upgrade.sh
+```
+# How to claim rewards?
+Change current directory to git project dir, then run following code:
+```
+fibos earn_bp.js
+```
 # Finally
 If you like my repo, your can run the following command and vote for me (williamfouvy).  Next command depends some programs: fibos, which I have describe in the section Register producer(optional)
 ```
