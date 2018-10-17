@@ -39,7 +39,7 @@ fibos.load("net", {
 });
 
 //fibos.load("producer");
-/* 超级节点的话，使用这部分代码，注释掉上面一行代码*/
+/* 超级节点的话，使用下面这部分代码，注释掉上面一行代码*/
 fibos.load("producer", {
         'producer-name': config["producer-name"],
         'enable-stale-production': true,
