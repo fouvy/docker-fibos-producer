@@ -8,6 +8,10 @@ var config = {
         "private-key": conf["producer-priKey"]
 };
 
+var chain = {
+    'chain-state-db-size-mb': 8192,
+};
+
 console.notice("正在启动FIBOS name:", config["producer-name"]);
 
 fibos.config_dir = "/data";
@@ -23,38 +27,42 @@ if (fs.exists(fibos.data_dir) && fs.exists(fibos.data_dir+"/blocks")) {
         console.warn("data_dir or config_dir is exists");
 }
 
+if(!isExist) {
+    chain["genesis-json"] = "/fibos/genesis.json";
+}
+
 fibos.load("http", {
-        "http-server-address": "0.0.0.0:8870"
+     "http-server-address": "0.0.0.0:8870",
+    "access-control-allow-origin": "*",
+    "access-control-allow-headers": "Content-Type",
+    "http-validate-host": false,
+    "verbose-http-errors": true,
 });
 
 fibos.load("net", {
         "max-clients":0,
         "p2p-listen-endpoint": "0.0.0.0:9870",
         "p2p-peer-address": [
-            "p2p.foshenzhenbp.com:9877",
             "p2p.mainnet.fibos.me:80",
             "fibos-node.slowmist.io:9870",
             "p2p-mainnet.fibos123.com:9977"
         ]
 });
 
-//fibos.load("producer");
-/* 超级节点的话，使用下面这部分代码，注释掉上面一行代码*/
+fibos.load("producer");
+/* 超级节点的话，使用下面这部分代码，注释掉上面一行代码
 fibos.load("producer", {
         'producer-name': config["producer-name"],
         'enable-stale-production': true,
         'private-key': JSON.stringify([config["public-key"], config["private-key"]])
-});
+});*/
 
-if (!isExist) {
-        fibos.load("chain",{"genesis-json":"/fibos/genesis.json"});
-}
-else {
-        fibos.load("chain")
-}
 
+fibos.load("chain", chain);
 fibos.load("chain_api");
-fibos.load("wallet");
-fibos.load("wallet_api");
+
+// history section
+fibos.load("history");
+fibos.load("history_api")
 
 fibos.start();
