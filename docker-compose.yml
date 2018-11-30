@@ -6,6 +6,8 @@ services:
     ports:
       - "9870:9870"
       - "8870:8870"
+    expose:
+      - "8870"
     volumes:
       - ./data:/data
       - ./fibos/config/config_producer.js:/fibos/config_producer.js
